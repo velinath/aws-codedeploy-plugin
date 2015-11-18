@@ -81,7 +81,7 @@ public class AWSCodeDeployPublisher extends Publisher {
 
     private final String  s3bucket;
     private final String  s3prefix;
-    private final String  applicationName;
+    private       String  applicationName;
     private       String  deploymentGroupName; // TODO allow for deployment to multiple groups
     private final String  deploymentConfig;
     private final Long    pollingTimeoutSec;
@@ -214,6 +214,7 @@ public class AWSCodeDeployPublisher extends Publisher {
         try {
 
             Map<String, String> envVars = build.getEnvironment(listener);
+            this.applicationName = Util.replaceMacro(this.applicationName, envVars)
             this.deploymentGroupName = Util.replaceMacro(this.deploymentGroupName, envVars);
 
             verifyCodeDeployApplication(aws);
